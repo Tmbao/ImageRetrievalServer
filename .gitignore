@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 
+# CMake files
+core/CMakeFiles
+core/CMakeCache.txt
+
 #Next editor
 *.py~
 
