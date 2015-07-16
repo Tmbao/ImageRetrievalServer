@@ -2,10 +2,6 @@
 __pycache__/
 *.py[cod]
 
-# CMake files
-core/CMakeFiles
-core/CMakeCache.txt
-
 #Next editor
 *.py~
 
@@ -15,5 +11,4 @@ core/CMakeCache.txt
 # Media resource
 media/
 
-# Data resource
-core/data
+

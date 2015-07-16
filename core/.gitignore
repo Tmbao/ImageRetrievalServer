@@ -1,0 +1,28 @@
+# CMake files
+CMakeFiles
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Dataset resource
+data
+
+# Temp files
+temp.mat
+
+# IDEA files
+.idea/*
+
+# Compiled files
+utils/compute_ap/compute_ap
+*.o
+ImageRetrievalCpp
+
+# Manifest file
+install_manifest.txt
+
+
+# Local file
+local_configurations.h
+
+
