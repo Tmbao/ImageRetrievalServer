@@ -1,1 +1,0 @@
-DATABASES_PASSWORD = 'dkhdsdtkd'
