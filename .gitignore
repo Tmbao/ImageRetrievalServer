@@ -1,0 +1,13 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+#Next editor
+*.py~
+
+# C extensions
+*.so
+
+# Media resource
+media/
+
