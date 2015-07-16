@@ -11,3 +11,5 @@ __pycache__/
 # Media resource
 media/
 
+# Data resource
+core/data
