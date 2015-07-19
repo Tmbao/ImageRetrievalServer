@@ -11,7 +11,7 @@ data
 temp.mat
 
 # IDEA files
-.idea/*
+.idea
 
 # Compiled files
 utils/compute_ap/compute_ap

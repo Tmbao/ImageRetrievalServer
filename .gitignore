@@ -11,4 +11,5 @@ __pycache__/
 # Media resource
 media/
 
-
+# Python virtual environment
+venv/
