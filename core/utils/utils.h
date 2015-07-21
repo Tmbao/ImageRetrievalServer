@@ -27,7 +27,7 @@ string vectorToJson(vector<string> v, string name) {
 string vectorToPgArray(vector<string> v) {
     string pgArray = "{";
     for (int i = 0; i < v.size(); i++) {
-        pgArray += "'" + v[i] + "'";
+        pgArray += "\"" + v[i] + "\"";
         if (i + 1 < v.size())
             pgArray += ", ";
     }

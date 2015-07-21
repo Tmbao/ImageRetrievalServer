@@ -66,7 +66,7 @@ void processQuery(int id, string fileName) {
 
     work upd(db);
     upd.exec("update iradapter_responserankedlist \
-        set content = " + pgArray + " status = 'C' \
+        set (content, status) = ('" + pgArray + "', 'C') \
         where id = " + to_string(id));
     upd.commit();
 }
@@ -89,6 +89,7 @@ void runServer() {
                 where rl.status = 'P'"));
             for (result::const_iterator it = res.begin(); it != res.end(); it++)
                 requests.push_back(Request(it[0].as<int>(), it[1].as<string>()));
+            slt.commit();
 
             if (!requests.empty()) {
                 // Process requests
