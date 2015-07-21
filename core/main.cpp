@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     if (argc > 1) {
         if (strcmp(argv[1], "test") == 0) {
             runTest();
-        } else if (strcmp(argv[1], "runserver")) {
+	} else if (strcmp(argv[1], "runserver") == 0) {
             runServer();
         }
     }

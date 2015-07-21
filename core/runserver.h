@@ -29,6 +29,8 @@ connection db("hostaddr=" + sqlHost + " port=5432 dbname=irserverdb user=" + sql
 
 void processQuery(int id, string fileName) {
 
+    printf("Process %d: %s\n", id, fileName.c_str());
+
     AppData *app = AppData::getInstance();
     int nDocs = app->path.size();
 
@@ -40,7 +42,7 @@ void processQuery(int id, string fileName) {
     string imgPath = fileName;
 
     mat _kp, _sift;
-    extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath);
+    extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, true);
 
     vec _weights;
     uvec _termID;
@@ -63,9 +65,9 @@ void processQuery(int id, string fileName) {
     string pgArray = vectorToPgArray(rankedListStr);
 
     work upd(db);
-    upd.exec("update irserverdb_responserankedlist \
+    upd.exec("update iradapter_responserankedlist \
         set content = " + pgArray + " status = 'C' \
-        where pk = " + to_string(id));
+        where id = " + to_string(id));
     upd.commit();
 }
 
@@ -74,13 +76,16 @@ void runServer() {
     try {
 
         while (true) {
+            printf("Fetching requests\n");
+
             vector<Request> requests;
 
             // Fetching all current requests
             nontransaction slt(db);
 
             result res(slt.exec("select * \
-                from irserverdb_requestimage as ri inner join irserverdb_responserankedlist as rl on ri.pk = rl.request \
+                from iradapter_requestimage as ri inner join iradapter_responserankedlist as rl \
+			on ri.id = rl.request_id \
                 where rl.status = 'P'"));
             for (result::const_iterator it = res.begin(); it != res.end(); it++)
                 requests.push_back(Request(it[0].as<int>(), it[1].as<string>()));
@@ -89,11 +94,12 @@ void runServer() {
                 // Process requests
                 for (Request request : requests) {
                     // Create thread
-                    thread tQuery(processQuery, request.id, mediaRoot + request.fileName);
+                    thread tQuery(processQuery, request.id, mediaRoot + "/" + request.fileName);
                     tQuery.join();
                 }
             }
 
+            printf("Sleeping...\n");
             usleep(loopSleepTime);
         }
 
