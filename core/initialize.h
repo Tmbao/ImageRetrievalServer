@@ -30,7 +30,8 @@ void extractAndQuantizeAll() {
 
     buildIndex(false);
 
-    for (string imgPath : app->path) {
+    for (int i = 0; i < app->path.size(); i++) {
+        string imgPath = app->path[i];
 
         debugVar(imgPath);
 
@@ -59,7 +60,7 @@ void extractAndQuantizeAll() {
         vec _weights;
         uvec _termID;
 
-        buildBoW(_sift[i], _weights, _termID, weightPath, termIDPath, false);
+        buildBoW(_sift, _weights, _termID, weightPath, termIDPath, false);
         
 //        Insert to inverted index
         app->ivt.add(_weights, _termID, i);
