@@ -28,7 +28,7 @@ void extractAndQuantizeAll() {
     // app->kp.reserve(app->path.size());
     // app->sift.reserve(app->path.size());
 
-    buildIndex(false);
+    buildIndex(forceOverwrite);
 
     for (int i = 0; i < app->path.size(); i++) {
         string imgPath = app->path[i];
@@ -53,14 +53,14 @@ void extractAndQuantizeAll() {
         debugVar(termIDPath);
 
         mat _kp, _sift;
-        extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, false);
+        extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, forceOverwrite);
 
         app->kp.push_back(_kp);
 
         vec _weights;
         uvec _termID;
 
-        buildBoW(_sift, _weights, _termID, weightPath, termIDPath, false);
+        buildBoW(_sift, _weights, _termID, weightPath, termIDPath, forceOverwrite);
         
 //        Insert to inverted index
         app->ivt.add(_weights, _termID, i);

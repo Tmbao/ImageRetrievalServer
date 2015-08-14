@@ -10,6 +10,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "opencv2/opencv.hpp"
+
 #include "pyramid.h"
 #include "helpers.h"
 #include "affine.h"

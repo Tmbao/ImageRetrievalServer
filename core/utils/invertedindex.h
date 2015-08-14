@@ -92,9 +92,13 @@ struct InvertedIndex {
 
         debugInfo("Adding document to inverted index");
         debugVar(docId);
+        debugVar(termId.n_rows);
+        debugVar(termId.n_cols);
+        debugVar(nWords);
 
         vector <int> rawFreq(nWords);
         for (int i = 0; i < termId.n_elem; i++) {
+            debugVar(termId[i]);  
             if (index[termId[i]].empty() || index[termId[i]].back() != docId) {
                 index[termId[i]].push_back(docId);
                 frequency[termId[i]].push_back(0);
