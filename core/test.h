@@ -100,6 +100,7 @@ void runTest() {
     processAllQueries();
 
     // !!!TODO: Compute result map
+    
 }
 
 #endif
