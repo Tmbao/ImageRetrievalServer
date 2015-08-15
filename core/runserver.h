@@ -45,7 +45,7 @@ void processQuery(int id, string fileName) {
     extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, true);
 
     vec _weights;
-    uvec _termID;
+    icol _termID;
     buildBoW(_sift, _weights, _termID, weightPath, termIDPath, true);
 
     vector<double> qTfidf = app->ivt.makeQueryTfidf(_weights, _termID);

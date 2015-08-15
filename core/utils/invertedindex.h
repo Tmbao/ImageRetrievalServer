@@ -56,7 +56,7 @@ struct InvertedIndex {
         debugInfo("Finish");
     }
 
-    vector<double> makeQueryTfidf(vec freq, uvec termId) {
+    vector<double> makeQueryTfidf(vec freq, icol termId) {
 
         if (!isBuild) 
             throw logic_error("You must perform buildTfidf before makeQueryTfidf");
@@ -87,7 +87,7 @@ struct InvertedIndex {
         return qTfidf;
     }
 
-    void add(vec freq, uvec termId, int docId) {
+    void add(vec freq, icol termId, int docId) {
         nDocs++;
 
         debugInfo("Adding document to inverted index");

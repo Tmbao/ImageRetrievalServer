@@ -31,7 +31,7 @@ void buildIndex(bool force = false) {
     treeIndex->save(indexFile);
 }
 
-void buildBoW(const mat &imageDesc, vec &_weights, uvec &_termID, const string &weightPath, const string &termIDPath, bool force = false) {
+void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &weightPath, const string &termIDPath, bool force = false) {
     if (!force && boost::filesystem::exists(weightPath)) {
         _weights.load(weightPath);
         _termID.load(termIDPath);
@@ -49,8 +49,8 @@ void buildBoW(const mat &imageDesc, vec &_weights, uvec &_termID, const string &
 
     treeIndex->knnSearch(query, indices, dists, queryKnn, cvflann::SearchParams(nChecks));
 
-    umat bins(queryKnn, query.rows);
-    memcpy(bins.memptr(), indices.data, query.rows * queryKnn * sizeof(uword));
+    intMat bins(queryKnn, query.rows);
+    memcpy(bins.memptr(), indices.data, query.rows * queryKnn * sizeof(int));
     mat sqrDists(queryKnn, query.rows);
     memcpy(sqrDists.memptr(), dists.data, query.rows * queryKnn * sizeof(double));
 

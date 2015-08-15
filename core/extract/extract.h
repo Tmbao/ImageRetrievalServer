@@ -9,7 +9,7 @@ mat inv2x2(mat C) {
     return S;
 }
 
-bool vl_ubcread(string file, mat &f, umat &d) {
+bool vl_ubcread(string file, mat &f, intMat &d) {
     int numKeypoints, descLen;
     FILE *fid = fopen(file.c_str(), "r");
 
@@ -20,7 +20,7 @@ bool vl_ubcread(string file, mat &f, umat &d) {
 
     f = mat(5, numKeypoints);
 
-    d = umat(descLen, numKeypoints);
+    d = intMat(descLen, numKeypoints);
 
     for (int k = 0; k < numKeypoints; ++k) {
         fscanf(fid, "%lf %lf %lf %lf %lf", &f(0, k), &f(1, k), &f(2, k), &f(3, k), &f(4, k));
@@ -56,11 +56,11 @@ void extractFeatures(string imagePath, mat &kpMat, mat &siftMat, const string &k
     system(cmd.c_str());
 
     mat clip_kp;
-    umat clip_desc;
+    intMat clip_desc;
 
     if (!vl_ubcread(tempFile, clip_kp, clip_desc)) {
         clip_kp = mat(5, 0);
-        clip_desc = umat(128, 0);
+        clip_desc = intMat(128, 0);
     }
 
     mat sift = conv_to<mat>::from(clip_desc);

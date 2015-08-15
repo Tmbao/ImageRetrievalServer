@@ -61,7 +61,7 @@ void processAllQueries() {
         debugVar(i);
 
         vec _weights;
-        uvec _termID;
+        icol _termID;
 
         string tmp = queryPath[i];
         tmp.replace(tmp.size() - 3, 3, "mat");
@@ -100,6 +100,7 @@ void runTest() {
     processAllQueries();
 
     // !!!TODO: Compute result map
+    
 }
 
 #endif
