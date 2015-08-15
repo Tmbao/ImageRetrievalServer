@@ -58,7 +58,7 @@ void extractAndQuantizeAll() {
         app->kp.push_back(_kp);
 
         vec _weights;
-        uvec _termID;
+        icol _termID;
 
         buildBoW(_sift, _weights, _termID, weightPath, termIDPath, false);
         

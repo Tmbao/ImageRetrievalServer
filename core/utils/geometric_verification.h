@@ -31,11 +31,11 @@ mat to_affinity(vec f) {
     }
 }
 
-uvec inliers(mat f1, mat f2, umat matches) {
+icol inliers(mat f1, mat f2, intMat matches) {
     int n_matches = matches.n_cols;
 
-    mat x1 = f1.submat(uvec({0, 1}), matches.rows(0).t());
-    mat x2 = f2.submat(uvec({0, 1}), matches.rows(1).t());
+    mat x1 = f1.submat(icol({0, 1}), matches.rows(0).t());
+    mat x2 = f2.submat(icol({0, 1}), matches.rows(1).t());
 
     mat x1hom = x1;
     x1hom.insert_rows(2, ones<rowvec>(x1.n_cols));
@@ -43,7 +43,7 @@ uvec inliers(mat f1, mat f2, umat matches) {
     x2hom.insert_rows(2, ones<rowvec>(x2.n_cols));
 
 
-    field<uvec> inlrs(n_matches);
+    field<icol> inlrs(n_matches);
 
     for (int m = 0; m < n_matches; m++) {
         for (int iter = 0; iter < N_ITERATIONS; iter++) {

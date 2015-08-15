@@ -42,6 +42,10 @@ static const string tempFolder = "data/temp";
 static const int loopSleepTime = 1000;
 
 
+typedef Mat<int> intMat;
+typedef Col<int> icol;
+
+
 // Geometric verification parameters
 #define TOLERANCE_1 80
 #define TOLERANCE_2 30
