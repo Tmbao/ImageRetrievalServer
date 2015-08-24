@@ -30,7 +30,7 @@ class RequestList(APIView):
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
-class RequestDetail(APIView):
+class ResponseLandscapeDetail(APIView):
     """
     Request detail, and ranked list
     """
