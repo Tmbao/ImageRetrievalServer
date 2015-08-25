@@ -20,6 +20,7 @@ using namespace arma;
 
 
 static const int number_of_visual_words = 100000;
+static const int nClass = 10;
 static const double EPS = 1e-9;
 
 static const string featureConfig = "-hesaff -sift -noangle";
