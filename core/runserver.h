@@ -57,20 +57,11 @@ void processQuery(int id, string fileName) {
         rankedList[i] = i;
     sort(rankedList.begin(), rankedList.end(), score);
 
-   	vector <int> cntClass(nClass);
-    for (int i = 0; i * i < nDocs; i++) {
-        string fileBaseName = getFileBaseName(app->path[rankedList[i]]);
-        int classId = (fileBaseName[0] - '0') * 10 + fileBaseName[1] - '0';
-        cntClass[classId]++;
+    vector<string> rankedListStr(nDocs);
+    for (int i = 0; i < nDocs; i++) {
+        rankedListStr[i] = getFileBaseName(app->path[rankedList[i]]);
+        rankedListStr[i] = rankedListStr[i].substr(0, rankedListStr[i].find('_'));
     }
-
-    int resClass = 0;
-    for (int i = 1; i < nClass; ++i)
-    	if (cntClass[resClass] < cntClass[i])
-    		resClass = i;
-
-    vector <string> rankedListStr(1);
-    sprintf(rankedListStr[0].c_str(), "%02d", resClass);
 
     // Save ranked list into db
     string pgArray = vectorToPgArray(rankedListStr);
