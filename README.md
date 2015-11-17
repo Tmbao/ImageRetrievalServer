@@ -18,5 +18,13 @@ Image Retrieval using C++
 
 ```
 E.g.:
-    curl -X POST -F "content=@all_souls_1_query.png" http://192.168.24.66:8080/request
+$ curl -X POST -F "content=@bana.jpg" http://112.78.11.178/request
+
+{"id":1,"content":"/media/images/2015/08/16/bana.jpg","request_at":"2015-08-16T11:30:10.465797Z","response":"Pending"}
+```
+
+Use send a GET request to the url corresponding to the response id to get the ranked list
+```
+E.g.: 
+curl -X GET http://112.78.11.178/request/1/
 ```

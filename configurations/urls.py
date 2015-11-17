@@ -7,5 +7,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('iradapter.urls', namespace='iradapter'))
+    url(r'^retrieve/', include('iradapter.urls', namespace='iradapter')),
+    url(r'^landscapes/', include('landscapes.urls', namespace='landscapes'))
 )

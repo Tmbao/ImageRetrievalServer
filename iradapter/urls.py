@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from iradapter.views import RequestList, RequestDetail
+from iradapter.views import RequestList, ResponseLandscapeDetail
 
 
 urlpatterns = [
-    url(r'^request$', RequestList.as_view()),
-    url(r'^request/(?P<pk>[0-9]+)/$', RequestDetail.as_view()),
+    url(r'^requests$', RequestList.as_view()),
+    url(r'^response/landscape/(?P<pk>[0-9]+)/$', ResponseLandscapeDetail.as_view()),
 ]

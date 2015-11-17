@@ -42,7 +42,7 @@ void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &
     memcpy(tmpData, imageDesc.memptr(), sizeof(double) * imageDesc.n_elem);
     cvflann::Matrix<double> query(tmpData, imageDesc.n_cols, imageDesc.n_rows);
 
-    cvflann::Matrix<uword> indices(new uword[query.rows*queryKnn], query.rows, queryKnn);
+    cvflann::Matrix<int> indices(new int[query.rows*queryKnn], query.rows, queryKnn);
     cvflann::Matrix<double> dists(new double[query.rows*queryKnn], query.rows, queryKnn);
 
     treeIndex->knnSearch(query, indices, dists, queryKnn, cvflann::SearchParams(nChecks));

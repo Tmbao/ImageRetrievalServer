@@ -37,17 +37,14 @@ struct InvertedIndex {
         debugInfo("Computing tfidf");
         for (int i = 0; i < nWords; i++) {
             
-            if (index[i].size() == 0)
-                debugVar(i);
-
             double idf = log(double(nDocs) / (index[i].size()));
 
             for (int j = 0; j < index[i].size(); j++) {
                 double tf = sqrt(frequency[i][j] / sumFrequency[index[i][j]] + 1e-8);
 
                 tfidf[i][j] = tf * idf;
-		            if (std::isnan(tf * idf))
-			             cout << "tfidf is nan\n";
+		if (std::isnan(tf * idf))
+		    cout << "tfidf is nan\n";
             }
         }
 
@@ -91,14 +88,9 @@ struct InvertedIndex {
         nDocs++;
 
         debugInfo("Adding document to inverted index");
-        debugVar(docId);
-        debugVar(termId.n_rows);
-        debugVar(termId.n_cols);
-        debugVar(nWords);
 
         vector <int> rawFreq(nWords);
         for (int i = 0; i < termId.n_elem; i++) {
-            debugVar(termId[i]);  
             if (index[termId[i]].empty() || index[termId[i]].back() != docId) {
                 index[termId[i]].push_back(docId);
                 frequency[termId[i]].push_back(0);

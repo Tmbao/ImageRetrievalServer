@@ -58,8 +58,10 @@ void processQuery(int id, string fileName) {
     sort(rankedList.begin(), rankedList.end(), score);
 
     vector<string> rankedListStr(nDocs);
-    for (int i = 0; i < nDocs; i++)
+    for (int i = 0; i < nDocs; i++) {
         rankedListStr[i] = getFileBaseName(app->path[rankedList[i]]);
+        rankedListStr[i] = rankedListStr[i].substr(0, rankedListStr[i].find('_'));
+    }
 
     // Save ranked list into db
     string pgArray = vectorToPgArray(rankedListStr);
