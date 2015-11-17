@@ -45,8 +45,6 @@ void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &
     cvflann::Matrix<uword> indices(new uword[query.rows*queryKnn], query.rows, queryKnn);
     cvflann::Matrix<double> dists(new double[query.rows*queryKnn], query.rows, queryKnn);
 
-    debugVar(indices.cols); debugVar(indices.rows);
-
     treeIndex->knnSearch(query, indices, dists, queryKnn, cvflann::SearchParams(nChecks));
 
     intMat bins(queryKnn, query.rows);
@@ -54,12 +52,7 @@ void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &
     mat sqrDists(queryKnn, query.rows);
     memcpy(sqrDists.memptr(), dists.data, query.rows * queryKnn * sizeof(double));
 
-    debugVar(bins(0));
-    debugVar(indices[0][0]);
-
     _termID = vectorise(bins, 0);
-
-    debugVar(_termID(0));
 
     mat weights = exp(-sqrDists / (2 * deltaSqr));
     weights = weights / repmat(sum(weights, 0), weights.n_rows, 1);
