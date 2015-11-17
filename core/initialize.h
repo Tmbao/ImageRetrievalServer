@@ -6,7 +6,7 @@
 #include "app/appdata.h"
 #include "extract/extract.h"
 #include "quantize/quantize.h"
-
+#include "utils/utils.h"
 
 void extractAndQuantizeAll() {
 
@@ -31,39 +31,16 @@ void extractAndQuantizeAll() {
     buildIndex(forceOverwrite);
 
     for (int i = 0; i < app->path.size(); i++) {
-        string imgPath = app->path[i];
-
-        debugVar(imgPath);
-
-        string tmp = imgPath;
-        tmp.replace(tmp.size() - 3, 3, "mat");
-
-        string kpPath = kpFolder + "/" + tmp;
-        string siftPath = siftFolder + "/" + tmp;
-        string tempPath = tempFolder + "/" + tmp;
-        string weightPath = weightFolder + "/" + tmp;
-        string termIDPath = termIDFolder + "/" + tmp;
-
-        imgPath = dataFolder + "/" + imgPath;
-
-        debugVar(imgPath);
-        debugVar(kpPath);
-        debugVar(siftPath);
-        debugVar(weightPath);
-        debugVar(termIDPath);
-
-        mat _kp, _sift;
-        extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, forceOverwrite);
-
-        app->kp.push_back(_kp);
-
         vec _weights;
         icol _termID;
-
-        buildBoW(_sift, _weights, _termID, weightPath, termIDPath, forceOverwrite);
+        loadBoW(i, _weights, _termID);
         
 //        Insert to inverted index
         app->ivt.add(_weights, _termID, i);
+
+        // Save weight and termID
+        // app->weights.push_back(_weights);
+        // app->termID.push_back(_termID);
     }
 
     //    Build TFIDF
