@@ -19,7 +19,7 @@ using namespace arma;
 #include "local_configurations.h"
 
 
-static const int number_of_visual_words = 100000;
+static const int number_of_visual_words = 1000000;
 static const int nClass = 10;
 static const double EPS = 1e-9;
 
@@ -27,7 +27,8 @@ static const string featureConfig = "-hesaff -sift -noangle";
 static const string computeDescriptorPath = "./utils/hesaff/hesaff";
 
 // static const string codebookFile = "data/oxbuilding_codebook_l2_1000000_24464227_128_50it.hdf5";
-static const string codebookFile = "data/all_clusters_100000_128_50it.hdf5" ;
+// static const string codebookFile = "data/all_clusters_100000_128_50it.hdf5" ;
+static const string codebookFile = "data/Clustering_l2_1000000_13516675_128_50it.hdf5";
 static const string indexFile = "data/flannIndex.hdf5";
 
 static const string dataFolder = "data/images";
@@ -39,10 +40,11 @@ static const string weightFolder = "data/weight";
 static const string termIDFolder = "data/termID";
 static const string apFolder = "data/ap";
 static const string tempFolder = "data/temp";
+static const string groundtruthFolder = "data/groundtruth";
 
-static const bool forceOverwrite = true;
+static const bool forceOverwrite = false;
 
-static const int loopSleepTime = 1000;
+static const int loopSleepTime = 5000;
 
 typedef Mat<int> umat;
 typedef Col<int> uvec;

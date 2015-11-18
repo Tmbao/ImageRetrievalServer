@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
     // Initialize
     // extractAll();
     // quantizeAllData();
+    initializeClassName();
     extractAndQuantizeAll();
 
     if (argc > 1) {

@@ -8,6 +8,29 @@
 #include "quantize/quantize.h"
 
 
+map<string, vector<string>> groups;
+
+void loadClass(string className, string path) {
+    FILE *file = fopen(path.c_str(), "r");
+    char fileName[100];
+    while (fscanf(file, "%s", fileName) != EOF) 
+        groups[fileName].push_back(className);
+    fclose(file);
+}
+
+void initializeClassName() {
+    DIR *dir = opendir(groundtruthFolder.c_str());
+    while (dirent *pdir = readdir(dir)) {
+        string fName = pdir->d_name;
+        if (fName[0] == '.') continue;
+
+        string className = fName.substr(0, fName.rfind('_'));
+        className = className.substr(0, className.rfind('_'));
+        loadClass(className, groundtruthFolder + '/' + fName);
+    }
+
+}
+
 void extractAndQuantizeAll() {
 
     AppData *app = AppData::getInstance();

@@ -57,10 +57,17 @@ void processQuery(int id, string fileName) {
         rankedList[i] = i;
     sort(rankedList.begin(), rankedList.end(), score);
 
-    vector<string> rankedListStr(nDocs);
+    vector<string> rankedListStr;
     for (int i = 0; i < nDocs; i++) {
-        rankedListStr[i] = getFileBaseName(app->path[rankedList[i]]);
-        rankedListStr[i] = rankedListStr[i].substr(0, rankedListStr[i].find('_'));
+        string fileName  = getFileBaseName(app->path[rankedList[i]]);
+        if (i < 20) {
+            debugVar(score.score[rankedList[i]]);
+            debugVar(fileName);
+        }
+        fileName = fileName.substr(0, fileName.rfind('.'));
+        vector<string> classes = groups[fileName];
+        for (string className : classes) 
+            rankedListStr.push_back(className);
     }
 
     // Save ranked list into db
@@ -78,7 +85,7 @@ void runServer() {
     try {
 
         while (true) {
-            printf("Fetching requests\n");
+            // printf("Fetching requests\n");
 
             vector<Request> requests;
 
@@ -102,7 +109,7 @@ void runServer() {
                 }
             }
 
-            printf("Sleeping...\n");
+            // printf("Sleeping...\n");
             usleep(loopSleepTime);
         }
 
