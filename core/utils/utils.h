@@ -2,6 +2,7 @@
 #define UTILS_H_INCLUDED
 
 #include "../configurations.h"
+#include "../app/appdata.h"
 
 
 string getFileBaseName(string fileName) {
@@ -33,6 +34,37 @@ string vectorToPgArray(vector<string> v) {
     }
     pgArray += "}";
     return pgArray;
+}
+
+void loadBoW(int imageId, vec &weights, icol &termID) {
+    AppData *app = AppData::getInstance();
+    string imgPath = app->path[imageId];
+
+    debugVar(imgPath);
+
+    string tmp = imgPath;
+    tmp.replace(tmp.size() - 3, 3, "mat");
+
+    string kpPath = kpFolder + "/" + tmp;
+    string siftPath = siftFolder + "/" + tmp;
+    string tempPath = tempFolder + "/" + tmp;
+    string weightPath = weightFolder + "/" + tmp;
+    string termIDPath = termIDFolder + "/" + tmp;
+
+    imgPath = dataFolder + "/" + imgPath;
+
+    debugVar(imgPath);
+    debugVar(kpPath);
+    debugVar(siftPath);
+    debugVar(weightPath);
+    debugVar(termIDPath);
+
+    mat _kp, _sift;
+    extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, forceOverwrite);
+
+    app->kp.push_back(_kp);
+
+    buildBoW(_sift, weights, termID, weightPath, termIDPath, forceOverwrite);
 }
 
 #endif

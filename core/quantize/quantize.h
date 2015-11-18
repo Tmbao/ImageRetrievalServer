@@ -45,8 +45,6 @@ void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &
     cvflann::Matrix<int> indices(new int[query.rows*queryKnn], query.rows, queryKnn);
     cvflann::Matrix<double> dists(new double[query.rows*queryKnn], query.rows, queryKnn);
 
-    debugVar(indices.cols); debugVar(indices.rows);
-
     treeIndex->knnSearch(query, indices, dists, queryKnn, cvflann::SearchParams(nChecks));
 
     intMat bins(queryKnn, query.rows);

@@ -27,7 +27,7 @@ struct Request {
 
 connection db("hostaddr=" + sqlHost + " port=5432 dbname=irserverdb user=" + sqlUser + " password=" + sqlPassword);
 
-void processQuery(int id, string fileName) {
+void processQuery(int id, string fileName, int queryExpansion = 0) {
 
     printf("Process %d: %s\n", id, fileName.c_str());
 
@@ -57,7 +57,46 @@ void processQuery(int id, string fileName) {
         rankedList[i] = i;
     sort(rankedList.begin(), rankedList.end(), score);
 
+    if (queryExpansion) {
+        int nVerified = queryExpansion + 1;
+        double qeVec[number_of_visual_words];
+        for (int i = 0; i < number_of_visual_words; i++) 
+            qeVec[i] = 0;
+        // Initialize with query image
+        for (int i = 0; i < _weights.size(); i++)
+            qeVec[_termID[i]] += _weights[i];
+
+        // Add the top image
+        for (int i = 0; i < queryExpansion; i++) {
+            vec _tweights;
+            icol _ttermID;
+            loadBoW(rankedList[i], _tweights, _termID);
+            for (int j = 0; j < _tweights.size(); j++)
+                qeVec[_ttermID[j]] += _tweights[j];
+        }
+
+        int nWords = 0;
+        for (int i = 0; i < number_of_visual_words; i++)
+            if (qeVec[i] > 0) 
+                nWords++;
+            
+        _weights = vec(nWords);
+        _termID = icol(nWords);
+        for (int i = 0, j = 0; i < number_of_visual_words; i++) 
+            if (qeVec[i] > 0) {
+                _weights[j] = qeVec[i] / nVerified;
+                _termID[j] = i;
+                j++;
+            }
+
+
+        qTfidf = app->ivt.makeQueryTfidf(_weights, _termID);
+        score = Score(computeAllScores(qTfidf));
+        sort(rankedList.begin(), rankedList.end(), score);
+    }
+
     vector<string> rankedListStr;
+
     for (int i = 0; i < nDocs; i++) {
         string fileName  = getFileBaseName(app->path[rankedList[i]]);
         if (i < 20) {
@@ -104,7 +143,7 @@ void runServer() {
                 // Process requests
                 for (Request request : requests) {
                     // Create thread
-                    thread tQuery(processQuery, request.id, mediaRoot + "/" + request.fileName);
+                    thread tQuery(processQuery, request.id, mediaRoot + "/" + request.fileName, 0);
                     tQuery.join();
                 }
             }
