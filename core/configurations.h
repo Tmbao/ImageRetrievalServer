@@ -20,7 +20,7 @@ using namespace arma;
 
 
 static const int number_of_visual_words = 1000000;
-static const int nClass = 10;
+static const int nClass = 11;
 static const double EPS = 1e-9;
 
 static const string featureConfig = "-hesaff -sift -noangle";
@@ -40,7 +40,7 @@ static const string weightFolder = "data/weight";
 static const string termIDFolder = "data/termID";
 static const string apFolder = "data/ap";
 static const string tempFolder = "data/temp";
-static const string groundtruthFolder = "data/groundtruth";
+static const string groundtruthFolder = "data/groundtruths";
 
 static const bool forceOverwrite = false;
 
