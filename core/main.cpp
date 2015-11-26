@@ -12,6 +12,7 @@
 
 
 int main(int argc, char **argv) {
+    cout << "argc " << argc << endl;    
 
     // Initialize
     // extractAll();
