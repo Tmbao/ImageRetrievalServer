@@ -12,11 +12,10 @@ const int queryKnn = 3;
 
 cvflann::Matrix<double> dataset;
 cvflann::Index<cvflann::L2<double>> *treeIndex;
+cvflann::IndexParams *indexParams;
 
 void buildIndex(bool force = false) {
     cvflann::load_from_file(dataset, codebookFile, "clusters");
-
-    cvflann::IndexParams *indexParams;
 
     debugVar(dataset.rows);
     debugVar(dataset.cols);
@@ -60,6 +59,10 @@ void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &
 
     _weights.save(weightPath);
     _termID.save(termIDPath);
+    
+    delete[] query.data;
+    delete[] indices.data;
+    delete[] dists.data;
 }
 
 #endif

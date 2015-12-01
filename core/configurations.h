@@ -46,10 +46,6 @@ static const bool forceOverwrite = false;
 
 static const int loopSleepTime = 5000;
 
-typedef Mat<int> umat;
-typedef Col<int> uvec;
-
-
 typedef Mat<int> intMat;
 typedef Col<int> icol;
 

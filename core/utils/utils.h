@@ -39,6 +39,8 @@ string vectorToPgArray(vector<string> v) {
 void loadBoW(int imageId, vec &weights, icol &termID) {
     AppData *app = AppData::getInstance();
     string imgPath = app->path[imageId];
+    
+    debugVar(imageId);
 
     debugVar(imgPath);
 
@@ -62,7 +64,7 @@ void loadBoW(int imageId, vec &weights, icol &termID) {
     mat _kp, _sift;
     extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, forceOverwrite);
 
-    app->kp.push_back(_kp);
+   // app->kp.push_back(_kp);
 
     buildBoW(_sift, weights, termID, weightPath, termIDPath, forceOverwrite);
 }
