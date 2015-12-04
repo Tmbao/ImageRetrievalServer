@@ -11,7 +11,7 @@
 #include "utils/utils.h"
 
 
-void processAllQueries() {
+void processAllQueries(int queryExpansion = 0) {
 
     AppData *app = AppData::getInstance();
 
@@ -84,6 +84,53 @@ void processAllQueries() {
             rankedList[i] = i;
         debugInfo("Sorting ranked list");
         sort(rankedList.begin(), rankedList.end(), score);
+        
+        if (queryExpansion) {
+            debugVar(number_of_visual_words);
+            debugVar(queryExpansion);
+            int nVerified = queryExpansion;
+            double qeVec[number_of_visual_words];
+            for (int i = 0; i < number_of_visual_words; i++) 
+                qeVec[i] = 0;
+            
+            debugInfo("Initializing qe");
+//            debugVar(_weights.size());
+//            // Initialize qe
+//            nVerified++;
+//            for (int i = 0; i < _weights.size(); i++)
+//                qeVec[_termID[i]] += _weights[i];
+    
+            debugInfo("Adding the top images");
+            // Add the top images
+            for (int i = 0; i < queryExpansion; i++) {
+                vec _tweights;
+                icol _ttermID;
+                debugVar(i);
+                loadBoW(rankedList[i], _tweights, _ttermID);
+                debugVar(_tweights.size());
+                for (int j = 0; j < _tweights.size(); j++)
+                    qeVec[_ttermID[j]] += _tweights[j];
+            }
+    
+            int nWords = 0;
+            for (int i = 0; i < number_of_visual_words; i++)
+                if (qeVec[i] > 0) 
+                    nWords++;
+                
+            _weights = vec(nWords);
+            _termID = icol(nWords);
+            for (int i = 0, j = 0; i < number_of_visual_words; i++) 
+                if (qeVec[i] > 0) {
+                    _weights[j] = qeVec[i] / nVerified;
+                    _termID[j] = i;
+                    j++;
+                }
+    
+    
+            qTfidf = app->ivt.makeQueryTfidf(_weights, _termID);
+            score = Score(computeAllScores(qTfidf));
+            sort(rankedList.begin(), rankedList.end(), score);
+        }
 
         debugInfo("Outputing ranked list");
         string rankedListPath = rankedListFolder + "/" + getFileBaseName(queryPath[i]) + ".txt";
@@ -96,8 +143,8 @@ void processAllQueries() {
 }
 
 
-void runTest() {
-    processAllQueries();
+void runTest(int queryExpansion = 0) {
+    processAllQueries(queryExpansion);
 
     // !!!TODO: Compute result map
     
