@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const string apFolder = "data/ap/";
+const string apFolder = "Dataset/ap/";
 
 int main() {
     DIR *dir = opendir(apFolder.c_str());
@@ -21,6 +21,7 @@ int main() {
 	cout << fName << " ";
 
         ifstream fin(fName.c_str());
+        cout << fName << endl;
         long double ap;
 
         fin >> ap;

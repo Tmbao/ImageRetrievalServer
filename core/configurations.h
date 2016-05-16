@@ -29,15 +29,15 @@ static const string computeDescriptorPath = "./utils/hesaff/hesaff";
 static const string codebookFile = "data/Clustering_l2_1000000_13516675_128_50it.hdf5";
 static const string indexFile = "data/flannIndex.hdf5";
 
-static const string dataFolder = "data/images";
-static const string queryFolder = "data/queries";
-static const string rankedListFolder = "data/rankedlists";
-static const string kpFolder = "data/Kp";
-static const string siftFolder = "data/SIFT";
-static const string weightFolder = "data/weight";
-static const string termIDFolder = "data/termID";
-static const string apFolder = "data/ap";
-static const string tempFolder = "data/temp";
+static const string dataFolder = "Dataset/images";
+static const string queryFolder = "Dataset/queries";
+static const string rankedListFolder = "Dataset/rankedlists";
+static const string kpFolder = "Dataset/Kp";
+static const string siftFolder = "Dataset/SIFT";
+static const string weightFolder = "Dataset/weight";
+static const string termIDFolder = "Dataset/termID";
+static const string apFolder = "Dataset/ap";
+static const string tempFolder = "Dataset/temp";
 
 static const int loopSleepTime = 1000;
 
