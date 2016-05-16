@@ -77,20 +77,12 @@ struct InvertedIndex {
             double tf = sqrt(fabs(qFrequency[i] / qSumFrequency));
 
             qTfidf[i] = tf * idf;
-<<<<<<< HEAD
-            if (std::isnan(tf)) {
-                cout << qFrequency[i] << " " << qSumFrequency << " nan\n";
-                exit(0);
-            }
-=======
             if (std::isnan(tf * idf)) {
                 cout << qFrequency[i] << " " << qSumFrequency << " nan\n";
 				cout << i << " " << nDocs << " " << index[i].size() << endl;
 				break;
 			}
->>>>>>> stable
-        }
-
+		}
 		debugVar(qTfidf[1]);
 
         return qTfidf;
