@@ -3,6 +3,7 @@
 
 #include "../configurations.h"
 
+
 mat inv2x2(mat C) {
     mat den = C.row(0) % C.row(2) - C.row(1) % C.row(1);
     mat S = join_vert(join_vert(C.row(2), - C.row(1)), C.row(0)) / repmat(den.row(0), 3, 1);
@@ -41,7 +42,7 @@ void convertJPGtoPNG(string filename) {
 }
 
 void extractFeatures(string imagePath, mat &kpMat, mat &siftMat, const string &kpPath, const string &siftPath, const string &tempPath, bool force = false) {
-    if (!force && boost::filesystem::exists(siftPath)) {
+    if (!force && fileExist(siftPath)) {
         kpMat.load(kpPath);
         siftMat.load(siftPath);
         cout << kpMat.n_rows << " " << kpMat.n_cols << endl;

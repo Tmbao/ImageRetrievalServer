@@ -3,7 +3,6 @@
 
 #include "../configurations.h"
 
-
 const double deltaSqr = 6250;
 const int nKdTree = 8;
 const int nChecks = 800;
@@ -20,7 +19,7 @@ void buildIndex(bool force = false) {
     debugVar(dataset.rows);
     debugVar(dataset.cols);
 
-    if (!force && boost::filesystem::exists(indexFile))
+    if (!force && fileExist(indexFile))
         indexParams = new cvflann::SavedIndexParams(indexFile);
     else
         indexParams = new cvflann::KDTreeIndexParams(nKdTree);
@@ -31,7 +30,7 @@ void buildIndex(bool force = false) {
 }
 
 void buildBoW(const mat &imageDesc, vec &_weights, icol &_termID, const string &weightPath, const string &termIDPath, bool force = false) {
-    if (!force && boost::filesystem::exists(weightPath)) {
+    if (!force && fileExist(weightPath)) {
         _weights.load(weightPath);
         _termID.load(termIDPath);
         return;

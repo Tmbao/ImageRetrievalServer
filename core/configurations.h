@@ -12,8 +12,6 @@ using namespace arma;
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/flann/flann.hpp>
 #include <opencv2/flann/hdf5.h>
-#include <boost/filesystem.hpp>
-
 #include <dirent.h>
 
 #include "local_configurations.h"
@@ -61,6 +59,13 @@ typedef Col<int> icol;
 #define sqr(x) (x) * (x)
 #define debugInfo(x) cerr << x << endl
 #define debugVar(x) cerr << #x << " = " << x << endl
+
+bool fileExist(const string &fileName) {
+    ifstream myFile(fileName);
+    bool result = myFile.good();
+    myFile.close();
+    return result;
+}
 
 
 #endif
