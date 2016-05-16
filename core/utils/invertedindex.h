@@ -36,15 +36,15 @@ struct InvertedIndex {
 
         debugInfo("Computing tfidf");
         for (int i = 0; i < nWords; i++) {
-            
-            double idf = log(double(nDocs) / (index[i].size()));
+           
+            double idf = log(double(nDocs) / (1 + index[i].size()));
 
             for (int j = 0; j < index[i].size(); j++) {
                 double tf = sqrt(frequency[i][j] / sumFrequency[index[i][j]] + 1e-8);
 
                 tfidf[i][j] = tf * idf;
-		if (std::isnan(tf * idf))
-		    cout << "tfidf is nan\n";
+		        if (std::isnan(tf * idf))
+			        cout << "tfidf is nan\n";
             }
         }
 
@@ -73,15 +73,25 @@ struct InvertedIndex {
         }
 
         for (int i = 0; i < nWords; i++) {
-            double idf = log(double(nDocs) / (index[i].size()));
+            double idf = log(double(nDocs) / (1 + index[i].size()));
             double tf = sqrt(fabs(qFrequency[i] / qSumFrequency));
 
             qTfidf[i] = tf * idf;
+<<<<<<< HEAD
             if (std::isnan(tf)) {
                 cout << qFrequency[i] << " " << qSumFrequency << " nan\n";
                 exit(0);
             }
+=======
+            if (std::isnan(tf * idf)) {
+                cout << qFrequency[i] << " " << qSumFrequency << " nan\n";
+				cout << i << " " << nDocs << " " << index[i].size() << endl;
+				break;
+			}
+>>>>>>> stable
         }
+
+		debugVar(qTfidf[1]);
 
         return qTfidf;
     }

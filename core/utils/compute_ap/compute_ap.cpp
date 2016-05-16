@@ -16,7 +16,7 @@ load_list(const string& fname)
   ifstream fobj(fname.c_str());
   if (!fobj.good()) { cerr << "File " << fname << " not found!\n"; exit(-1); }
   string line;
-  while (getline(fobj, line)) {
+  while (fobj >> line) {
     ret.push_back(line);
   }
   return ret;
@@ -36,7 +36,9 @@ compute_ap(const set<string>& pos, const set<string>& amb, const vector<string>&
   size_t intersect_size = 0;
   size_t i = 0;
   size_t j = 0;
+  
   for ( ; i<ranked_list.size(); ++i) {
+  //cout << ranked_list[i] <<" "<<pos.count(ranked_list[i]) << endl;
     if (amb.count(ranked_list[i])) continue;
     if (pos.count(ranked_list[i])) intersect_size++;
 
@@ -64,12 +66,16 @@ main(int argc, char** argv)
 
   vector<string> ranked_list = load_list(argv[2]);
   set<string> good_set = vector_to_set( load_list(gtq + "_good.txt") );
-  set<string> ok_set = vector_to_set( load_list(gtq + "_ok.txt") );
-  set<string> junk_set = vector_to_set( load_list(gtq + "_junk.txt") );
+  set<string> ok_set = set<string>();// = vector_to_set( load_list(gtq + "_ok.txt") );
+  set<string> junk_set = set<string>();;// = vector_to_set( load_list(gtq + "_junk.txt") );
 
   set<string> pos_set;
   pos_set.insert(good_set.begin(), good_set.end());
   pos_set.insert(ok_set.begin(), ok_set.end());
+  
+  //cout << *pos_set.begin() << endl;
+  //cout << (*pos_set.begin()).size()  << endl;
+  //cout << ((*pos_set.begin()) == string("comhen_1\n")) << endl;
 
   float ap = compute_ap(pos_set, junk_set, ranked_list);
   
