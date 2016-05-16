@@ -33,8 +33,6 @@ void extractAndQuantizeAll() {
     for (int i = 0; i < app->path.size(); i++) {
         string imgPath = app->path[i];
 
-        debugVar(imgPath);
-
         string tmp = imgPath;
         tmp.replace(tmp.size() - 3, 3, "mat");
 
