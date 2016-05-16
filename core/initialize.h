@@ -54,7 +54,30 @@ void extractAndQuantizeAll() {
     buildIndex(forceOverwrite);
 
     for (int i = 0; i < app->path.size(); i++) {
-        vec _weights;
+       string imgPath = app->path[i];
+
+        string tmp = imgPath;
+        tmp.replace(tmp.size() - 3, 3, "mat");
+
+        string kpPath = kpFolder + "/" + tmp;
+        string siftPath = siftFolder + "/" + tmp;
+        string tempPath = tempFolder + "/" + tmp;
+        string weightPath = weightFolder + "/" + tmp;
+        string termIDPath = termIDFolder + "/" + tmp;
+
+        imgPath = dataFolder + "/" + imgPath;
+
+        debugVar(imgPath);
+        debugVar(kpPath);
+        debugVar(siftPath);
+        debugVar(weightPath);
+        debugVar(termIDPath);
+
+        mat _kp, _sift;
+        extractFeatures(imgPath, _kp, _sift, kpPath, siftPath, tempPath, false);
+
+        app->kp.push_back(_kp);
+
         icol _termID;
         loadBoW(i, _weights, _termID);
         
