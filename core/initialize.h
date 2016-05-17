@@ -79,7 +79,8 @@ void extractAndQuantizeAll() {
         app->kp.push_back(_kp);
 
         icol _termID;
-        loadBoW(i, _weights, _termID);
+        vec _weights;
+		loadBoW(i, _weights, _termID);
         
 //        Insert to inverted index
         app->ivt.add(_weights, _termID, i);
